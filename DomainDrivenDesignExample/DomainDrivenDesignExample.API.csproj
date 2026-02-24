@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BoundexContexts\Account\" />
-    <Folder Include="BoundexContexts\Catalog\" />
-    <Folder Include="BoundexContexts\Scheduling\" />
+    <Folder Include="BoundedContexts\Account\" />
+    <Folder Include="BoundedContexts\Catalog\" />
+    <Folder Include="BoundedContexts\Scheduling\" />
   </ItemGroup>
 
 </Project>
