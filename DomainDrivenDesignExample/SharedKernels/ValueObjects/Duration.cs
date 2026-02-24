@@ -1,0 +1,74 @@
+﻿#region
+
+using Ardalis.GuardClauses;
+
+#endregion
+
+namespace DomainDrivenDesignExample.API.BoundexContexts.ValueObjects;
+
+public class Duration : ValueObject
+{
+    public Duration(double minutes)
+    {
+        Guard.Against.NegativeOrZero(minutes, nameof(minutes), "Duration must be positive.");
+        Guard.Against.InvalidInput(minutes, nameof(minutes),
+            m => m < 600,
+            "Duration cannot exceed 600 minutes.");
+
+        Minutes = minutes;
+    }
+
+    public double Minutes { get; }
+    public double Hours => Minutes / 60;
+    public double RemainingMinutes => Minutes % 60;
+
+    public TimeSpan ToTimeSpan()
+    {
+        return TimeSpan.FromMinutes(Minutes);
+    }
+
+    public string GetFormattedDuration()
+    {
+        if (Hours == 0)
+            return $"{Minutes}m";
+
+        return RemainingMinutes == 0
+            ? $"{Hours}h"
+            : $"{Hours}h {RemainingMinutes}m";
+    }
+
+    public bool IsShortMovie()
+    {
+        return Minutes < 90;
+    }
+
+    public bool IsFeatureLength()
+    {
+        return Minutes >= 90;
+    }
+
+    public bool IsLongMovie()
+    {
+        return Minutes > 180;
+    }
+
+    protected override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Minutes;
+    }
+
+    public static Duration FromHours(int hours)
+    {
+        return new Duration(hours * 60);
+    }
+
+    public static Duration FromHoursAndMinutes(int hours, int minutes)
+    {
+        return new Duration((hours * 60) + minutes);
+    }
+
+    public override string ToString()
+    {
+        return GetFormattedDuration();
+    }
+}

@@ -7,11 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ardalis.GuardClauses" Version="5.0.0" />
+    <PackageReference Include="MediatR" Version="14.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DomainDrivenDesignExample.ServiceDefaults\DomainDrivenDesignExample.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="BoundexContexts\Account\" />
+    <Folder Include="BoundexContexts\Catalog\" />
+    <Folder Include="BoundexContexts\Scheduling\" />
   </ItemGroup>
 
 </Project>
