@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="DomainDrivenDesignExample.AppHost/DomainDrivenDesignExample.AppHost.csproj" />
+  <Project Path="DomainDrivenDesignExample.ServiceDefaults/DomainDrivenDesignExample.ServiceDefaults.csproj" />
+  <Project Path="DomainDrivenDesignExample/DomainDrivenDesignExample.API.csproj" />
+</Solution>

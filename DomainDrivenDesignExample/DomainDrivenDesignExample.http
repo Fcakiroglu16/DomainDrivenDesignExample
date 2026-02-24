@@ -1,0 +1,6 @@
+@DomainDrivenDesignExample_HostAddress = http://localhost:5217
+
+GET {{DomainDrivenDesignExample_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
