@@ -1,0 +1,70 @@
+﻿#region
+
+using Ardalis.GuardClauses;
+using DomainDrivenDesignExample.API.SharedKernels.ValueObjects;
+
+#endregion
+
+namespace CinemaTicketingSystem.Domain.BoundedContexts.Ticketing.ValueObjects;
+
+public class CustomerId : ValueObject
+{
+    public CustomerId(Guid value)
+    {
+        Value = Guard.Against.Default(value, nameof(value), "UserId cannot be empty.");
+    }
+
+    private CustomerId()
+    {
+    }
+
+    public Guid Value { get; }
+
+
+    // static factory method
+    public static CustomerId New()
+    {
+        return new CustomerId(Guid.CreateVersion7());
+    }
+
+    public static CustomerId From(Guid value)
+    {
+        return new CustomerId(value);
+    }
+
+    public static CustomerId From(string value)
+    {
+        if (!Guid.TryParse(value, out Guid guid))
+            throw new ArgumentException($"Invalid CustomerId format: {value}");
+
+        return new CustomerId(guid);
+    }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
+    }
+
+    public override string ToString()
+    {
+        return Value.ToString();
+    }
+
+
+
+    public static implicit operator Guid(CustomerId userId)
+    {
+        return userId.Value;
+    }
+
+    public static implicit operator CustomerId(Guid value)
+    {
+        // Guard against default Guid value
+
+
+        return new CustomerId(value);
+    }
+
+
+  
+}

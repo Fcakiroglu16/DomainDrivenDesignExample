@@ -6,8 +6,8 @@ public abstract class ValueObject
 
     public override bool Equals(object? obj)
     {
-        //if (obj is null || obj.GetType() != GetType())
-        //    return false;
+        if (obj is null || obj.GetType() != GetType())
+            return false;
 
         ValueObject other = (ValueObject)obj!;
 
@@ -17,14 +17,10 @@ public abstract class ValueObject
 
     public override int GetHashCode()
     {
-        return GetEqualityComponents()
-            .Aggregate(1, (current, obj) =>
-            {
-                unchecked
-                {
-                    return (current * 23) + (obj?.GetHashCode() ?? 0);
-                }
-            });
+        var hash = new HashCode();
+        foreach (var component in GetEqualityComponents())
+            hash.Add(component);
+        return hash.ToHashCode();
     }
 
     public static bool operator ==(ValueObject? a, ValueObject? b)

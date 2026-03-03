@@ -1,6 +1,7 @@
 ﻿#region
 
 using Ardalis.GuardClauses;
+using DomainDrivenDesignExample.API.SharedKernels.ValueObjects;
 
 #endregion
 

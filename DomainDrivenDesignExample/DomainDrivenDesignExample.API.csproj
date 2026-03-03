@@ -19,7 +19,9 @@
   <ItemGroup>
     <Folder Include="BoundedContexts\Account\" />
     <Folder Include="BoundedContexts\Catalog\" />
-    <Folder Include="BoundedContexts\Scheduling\" />
+    <Folder Include="Infrastructure\Caching\" />
+    <Folder Include="Infrastructure\Logging\" />
+    <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>
 
 </Project>
