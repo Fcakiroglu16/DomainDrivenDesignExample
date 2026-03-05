@@ -1,6 +1,6 @@
 ﻿using DomainDrivenDesignExample.API.SharedKernels;
 
-namespace DomainDrivenDesignExample.API.BoundedContexts.Scheduling.Services;
+namespace DomainDrivenDesignExample.API.BoundedContexts.Scheduling.Services.SupplierCustomerContextMap;
 
 public class ScheduleQueryService : IScheduleQueryService
 {

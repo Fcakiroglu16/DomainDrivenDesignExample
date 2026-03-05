@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="BoundedContexts\Account\" />
-    <Folder Include="BoundedContexts\Catalog\" />
     <Folder Include="Infrastructure\Caching\" />
     <Folder Include="Infrastructure\Logging\" />
     <Folder Include="Infrastructure\Repositories\" />
