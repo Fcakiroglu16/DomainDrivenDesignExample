@@ -1,15 +1,14 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using CinemaTicketingSystem.Application.Catalog.Services;
+﻿using CinemaTicketingSystem.Application.Catalog.Services;
 using DomainDrivenDesignExample.API.BoundedContexts.Catalog.SupplierCustomerContextMap;
 using DomainDrivenDesignExample.API.BoundedContexts.Scheduling.Services.SupplierCustomerContextMap;
+using DomainDrivenDesignExample.API.BoundedContexts.Ticketing.Aggregate;
 using DomainDrivenDesignExample.API.BoundedContexts.Ticketing.SeatHoldAggregate;
 using DomainDrivenDesignExample.API.BoundexContexts.Ticketing;
+using DomainDrivenDesignExample.API.Endpoints.Ticketing.TicketIssuance.Create;
 using DomainDrivenDesignExample.API.SharedKernels;
 using DomainDrivenDesignExample.API.SharedKernels.ValueObjects;
 
-namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.Aggregate;
-
-public record CreateTicketIssuanceRequest(Guid ScheduledMovieShowId, DateOnly ScreeningDate);
+namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.TicketingAggregate;
 
 public record CreateTicketIssuanceResponse(Guid CreatedTicketIssuanceId);
 
@@ -19,9 +18,9 @@ public class TicketIssuanceApplicationService(
     ISeatHoldRepository seatHoldRepository,
     IUserContext userContext,
     IScheduleQueryService scheduleQueryService,
-    ICatalogQueryService catalogQueryService)
+    ICatalogQueryService catalogQueryService) : ITicketIssuanceApplicationService
 {
-    public async Task<AppResult<CreateTicketIssuanceResponse>> CreateTicketIssuance(CreateTicketIssuanceRequest request)
+    public async Task<AppResult<CreateTicketIssuanceResponse>> Create(CreateTicketIssuanceRequest request)
     {
         var customerId = userContext.UserId;
 

@@ -1,17 +1,6 @@
-#region
 
-using CinemaTicketingSystem.Application.Contracts;
-using CinemaTicketingSystem.Application.Contracts.DependencyInjections;
-using CinemaTicketingSystem.Domain.BoundedContexts.Catalog;
-using CinemaTicketingSystem.Domain.BoundedContexts.Catalog.Repositories;
-using CinemaTicketingSystem.SharedKernel;
-using Microsoft.Extensions.Logging;
-using System.Net;
-using DomainDrivenDesignExample.API.BoundedContexts.Catalog.SupplierCustomerContextMap;
 
-#endregion
-
-namespace CinemaTicketingSystem.Application.Catalog.Services;
+namespace DomainDrivenDesignExample.API.BoundedContexts.Catalog.SupplierCustomerContextMap;
 
 //public class CatalogQueryService(
 //    ICinemaRepository cinemaRepository,
