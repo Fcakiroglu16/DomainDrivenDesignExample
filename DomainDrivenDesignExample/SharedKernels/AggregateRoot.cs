@@ -1,11 +1,12 @@
 #region
+
 using DomainDrivenDesignExample.API.SharedKernels;
 
 #endregion
 
 namespace CinemaTicketingSystem.SharedKernel.AggregateRoot;
 
-public abstract class AggregateRootBase : EntityBase,IAggregateRoot
+public abstract class AggregateRootBase : EntityBase, IAggregateRoot
 {
     private readonly List<IDomainEvent> _domainEvents = [];
     private readonly List<IIntegrationEvent> _integrationEvents = [];

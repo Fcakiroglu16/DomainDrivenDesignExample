@@ -2,78 +2,74 @@
 using CinemaTicketingSystem.SharedKernel.AggregateRoot;
 using DomainDrivenDesignExample.API.SharedKernels.ValueObjects;
 
-namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.SeatHoldAggregate
+namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.SeatHoldAggregate;
+
+public enum HoldStatus
 {
-    public enum HoldStatus
+    Active,
+    Hold,
+    Expired
+}
+
+public class SeatHold : AggregateRoot<Guid>
+{
+    private const int DefaultHoldDurationMinutes = 5;
+
+    protected SeatHold()
     {
-        Active,
-        Hold,
-        Expired
+    } // For EF Core
+
+    public SeatHold(Guid scheduledMovieShowId, CustomerId customerId, SeatPosition seatPosition, DateOnly screeningDate)
+    {
+        Id = Guid.CreateVersion7();
+        ScheduledMovieShowId = scheduledMovieShowId;
+        CustomerId = customerId;
+        SeatPosition = seatPosition;
+        Status = HoldStatus.Active;
+        ScreeningDate = screeningDate;
+
+        //AddDomainEvent(new SeatHoldStarted(ScheduledMovieShowId, CustomerId, screeningDate, SeatPosition));
     }
 
+    public CustomerId CustomerId { get; }
 
-    public class SeatHold : AggregateRoot<Guid>
+    public DateOnly ScreeningDate { get; }
+
+    public Guid ScheduledMovieShowId { get; }
+    public SeatPosition SeatPosition { get; }
+
+    public DateTime? ExpiresAt { get; private set; }
+
+    public HoldStatus Status { get; private set; }
+
+
+    public void ConfirmHold()
     {
-        private const int DefaultHoldDurationMinutes = 5;
+        Status = HoldStatus.Hold;
+        ExpiresAt = DateTime.UtcNow.Add(TimeSpan.FromMinutes(DefaultHoldDurationMinutes));
+        //AddDomainEvent(new SeatHoldConfirmed(ScheduledMovieShowId, CustomerId, ScreeningDate, SeatPosition));
+    }
 
-        protected SeatHold()
-        {
-        } // For EF Core
+    public void ExtendHold(TimeSpan additionalTime)
+    {
+        //if (IsExpired())
+        //    throw new BusinessException(ErrorCodes.SeatHoldExpired);
 
-        public SeatHold(Guid scheduledMovieShowId, CustomerId customerId, SeatPosition seatPosition, DateOnly screeningDate)
-        {
-            Id = Guid.CreateVersion7();
-            ScheduledMovieShowId = scheduledMovieShowId;
-            CustomerId = customerId;
-            SeatPosition = seatPosition;
-            Status = HoldStatus.Active;
-            ScreeningDate = screeningDate;
+        ExpiresAt = ExpiresAt?.Add(additionalTime);
+    }
 
-            //AddDomainEvent(new SeatHoldStarted(ScheduledMovieShowId, CustomerId, screeningDate, SeatPosition));
-        }
-        public CustomerId CustomerId { get; }
+    public bool IsExpired()
+    {
+        return DateTime.UtcNow > ExpiresAt;
+    }
 
-        public DateOnly ScreeningDate { get; }
+    public bool CanBeConvertedToReservationOrPurchase()
+    {
+        return !IsExpired();
+    }
 
-        public Guid ScheduledMovieShowId { get; }
-        public SeatPosition SeatPosition { get; }
-
-        public DateTime? ExpiresAt { get; private set; }
-
-        public HoldStatus Status { get; private set; }
-
-
-
-
-
-        public void ConfirmHold()
-        {
-            Status = HoldStatus.Hold;
-            ExpiresAt = DateTime.UtcNow.Add(TimeSpan.FromMinutes(DefaultHoldDurationMinutes));
-            //AddDomainEvent(new SeatHoldConfirmed(ScheduledMovieShowId, CustomerId, ScreeningDate, SeatPosition));
-        }
-
-        public void ExtendHold(TimeSpan additionalTime)
-        {
-            //if (IsExpired())
-            //    throw new BusinessException(ErrorCodes.SeatHoldExpired);
-
-            ExpiresAt = ExpiresAt?.Add(additionalTime);
-        }
-
-        public bool IsExpired()
-        {
-            return DateTime.UtcNow > ExpiresAt;
-        }
-
-        public bool CanBeConvertedToReservationOrPurchase()
-        {
-            return !IsExpired();
-        }
-
-        public bool IsHold()
-        {
-            return Status == HoldStatus.Hold && !IsExpired();
-        }
+    public bool IsHold()
+    {
+        return Status == HoldStatus.Hold && !IsExpired();
     }
 }

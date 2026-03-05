@@ -1,6 +1,5 @@
-﻿namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.Aggregate
+﻿namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.Aggregate;
+
+public interface ITicketIssuanceRepository
 {
-    public interface ITicketIssuanceRepository
-    {
-    }
 }

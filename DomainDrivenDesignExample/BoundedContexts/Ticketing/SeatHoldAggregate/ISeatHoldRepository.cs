@@ -1,6 +1,5 @@
-﻿namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.SeatHoldAggregate
+﻿namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.SeatHoldAggregate;
+
+public interface ISeatHoldRepository
 {
-    public interface ISeatHoldRepository
-    {
-    }
 }

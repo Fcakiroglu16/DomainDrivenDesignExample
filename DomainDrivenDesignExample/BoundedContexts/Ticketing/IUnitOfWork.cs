@@ -1,7 +1,6 @@
-﻿namespace DomainDrivenDesignExample.API.BoundexContexts.Ticketing
+﻿namespace DomainDrivenDesignExample.API.BoundexContexts.Ticketing;
+
+public interface IUnitOfWork
 {
-    public interface IUnitOfWork
-    {
-        Task<int> CommitAsync();
-    }
+    Task<int> CommitAsync();
 }

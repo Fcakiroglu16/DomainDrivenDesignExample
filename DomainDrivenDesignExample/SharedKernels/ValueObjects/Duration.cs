@@ -11,7 +11,7 @@ public class Duration : ValueObject
 {
     public Duration(double minutes)
     {
-        Guard.Against.NegativeOrZero(minutes, nameof(minutes), "Duration must be positive.");
+        Guard.Against.NegativeOrZero(minutes, "Duration must be positive.");
         Guard.Against.InvalidInput(minutes, nameof(minutes),
             m => m < 600,
             "Duration cannot exceed 600 minutes.");
@@ -65,7 +65,7 @@ public class Duration : ValueObject
 
     public static Duration FromHoursAndMinutes(int hours, int minutes)
     {
-        return new Duration((hours * 60) + minutes);
+        return new Duration(hours * 60 + minutes);
     }
 
     public override string ToString()

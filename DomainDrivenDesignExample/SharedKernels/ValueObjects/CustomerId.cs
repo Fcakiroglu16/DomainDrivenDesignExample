@@ -11,7 +11,7 @@ public class CustomerId : ValueObject
 {
     public CustomerId(Guid value)
     {
-        Value = Guard.Against.Default(value, nameof(value), "UserId cannot be empty.");
+        Value = Guard.Against.Default(value, "UserId cannot be empty.");
     }
 
     private CustomerId()
@@ -34,7 +34,7 @@ public class CustomerId : ValueObject
 
     public static CustomerId From(string value)
     {
-        if (!Guid.TryParse(value, out Guid guid))
+        if (!Guid.TryParse(value, out var guid))
             throw new ArgumentException($"Invalid CustomerId format: {value}");
 
         return new CustomerId(guid);
@@ -51,7 +51,6 @@ public class CustomerId : ValueObject
     }
 
 
-
     public static implicit operator Guid(CustomerId userId)
     {
         return userId.Value;
@@ -64,7 +63,4 @@ public class CustomerId : ValueObject
 
         return new CustomerId(value);
     }
-
-
-  
 }

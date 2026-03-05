@@ -1,6 +1,5 @@
-﻿namespace DomainDrivenDesignExample.API.BoundedContexts.Scheduling
+﻿namespace DomainDrivenDesignExample.API.BoundedContexts.Scheduling;
+
+public interface IScheduleAppService
 {
-    public interface IScheduleAppService
-    {
-    }
 }

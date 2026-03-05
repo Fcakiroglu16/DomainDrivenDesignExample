@@ -13,8 +13,8 @@ public class Price : ValueObject
 {
     public Price(decimal amount, string currency)
     {
-        Amount = Guard.Against.Negative(amount, nameof(amount), "Amount cannot be negative.");
-        Currency = Guard.Against.NullOrWhiteSpace(currency, nameof(currency), "Currency is required.")
+        Amount = Guard.Against.Negative(amount, "Amount cannot be negative.");
+        Currency = Guard.Against.NullOrWhiteSpace(currency, "Currency is required.")
             .ToUpperInvariant(); // Örn: "TRY", "USD"
     }
 

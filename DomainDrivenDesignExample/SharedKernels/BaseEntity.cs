@@ -48,5 +48,3 @@ public abstract class EntityBase
 
     protected abstract object?[] GetKeys();
 }
-
-

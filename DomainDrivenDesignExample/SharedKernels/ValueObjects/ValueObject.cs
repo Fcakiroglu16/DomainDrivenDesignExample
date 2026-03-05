@@ -9,7 +9,7 @@ public abstract class ValueObject
         if (obj is null || obj.GetType() != GetType())
             return false;
 
-        ValueObject other = (ValueObject)obj!;
+        var other = (ValueObject)obj!;
 
         return GetEqualityComponents()
             .SequenceEqual(other.GetEqualityComponents());

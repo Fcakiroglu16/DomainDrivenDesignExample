@@ -1,68 +1,62 @@
 ﻿using DomainDrivenDesignExample.API.SharedKernels;
 using DomainDrivenDesignExample.API.SharedKernels.ValueObjects;
 
-namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.Aggregate
+namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.Aggregate;
+
+public class Ticket : BaseEntity<Guid>
 {
-    public class Ticket : BaseEntity<Guid>
+    public Ticket(SeatPosition seatPosition, Price price)
     {
-        public Ticket(SeatPosition seatPosition, Price price)
-        {
-            Id = Guid.CreateVersion7();
-            SeatPosition = seatPosition;
-            Price = price;
-            TicketCode = GenerateTicketCode();
-            IsUsed = false;
-        }
+        Id = Guid.CreateVersion7();
+        SeatPosition = seatPosition;
+        Price = price;
+        TicketCode = GenerateTicketCode();
+        IsUsed = false;
+    }
 
-        private Ticket()
-        {
-        }
+    private Ticket()
+    {
+    }
 
 
-        public SeatPosition SeatPosition { get; }
-        public Price Price { get; }
+    public SeatPosition SeatPosition { get; }
+    public Price Price { get; }
 
-        public string TicketCode { get; }
-        public bool IsUsed { get; private set; }
+    public string TicketCode { get; }
+    public bool IsUsed { get; private set; }
 
-        public DateTime? UsedAt { get; private set; }
+    public DateTime? UsedAt { get; private set; }
 
-        public virtual TicketIssuance TicketIssuance { get; private set; }
+    public virtual TicketIssuance TicketIssuance { get; private set; }
 
-    
-   
-   
-  
-     
 
-        public bool CanBeUsed()
-        {
-            return !IsUsed;
-        }
+    public bool CanBeUsed()
+    {
+        return !IsUsed;
+    }
 
-        public string GetTicketInfo()
-        {
-            return $"Ticket: {TicketCode}, Seat: {SeatPosition}, Price: {Price}";
-        }
+    public string GetTicketInfo()
+    {
+        return $"Ticket: {TicketCode}, Seat: {SeatPosition}, Price: {Price}";
+    }
 
-        private static string GenerateTicketCode()
-        {
-            const string chars = "abcdefghijklmnopqrstuvwxyz";
-            Random random = new Random();
+    private static string GenerateTicketCode()
+    {
+        const string chars = "abcdefghijklmnopqrstuvwxyz";
+        var random = new Random();
 
-            return new string(Enumerable.Range(0, 6)
-                .Select(_ => chars[random.Next(chars.Length)])
-                .ToArray());
-        }
+        return new string(Enumerable.Range(0, 6)
+            .Select(_ => chars[random.Next(chars.Length)])
+            .ToArray());
+    }
 
-        public void MarkAsUsed()
-        {
-            //if (IsUsed)
-            //    throw new BusinessException(ErrorCodes.TicketAlreadyUsed)
-            //        .AddData(TicketCode);
+    public void MarkAsUsed()
+    {
+        //if (IsUsed)
+        //    throw new BusinessException(ErrorCodes.TicketAlreadyUsed)
+        //        .AddData(TicketCode);
 
-            IsUsed = true;
-            UsedAt = DateTime.UtcNow;
-        }
+        IsUsed = true;
+        UsedAt = DateTime.UtcNow;
     }
 }

@@ -14,9 +14,9 @@ public class SeatPosition : ValueObject
 
     public SeatPosition(string row, int number)
     {
-        Row = Guard.Against.NullOrWhiteSpace(row, nameof(row), "Row cannot be empty.")
+        Row = Guard.Against.NullOrWhiteSpace(row, "Row cannot be empty.")
             .ToUpper();
-        Number = Guard.Against.NegativeOrZero(number, nameof(number), "Seat number must be positive.");
+        Number = Guard.Against.NegativeOrZero(number, "Seat number must be positive.");
     }
 
     public string Row { get; }
