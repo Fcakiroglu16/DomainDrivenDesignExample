@@ -1,6 +1,10 @@
 using DomainDrivenDesignExample.API.Endpoints.Ticketing;
+using DomainDrivenDesignExample.API.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddPersistence(builder.Configuration);
+
 
 builder.AddServiceDefaults();
 
@@ -21,4 +25,3 @@ app.UseHttpsRedirection();
 
 app.AddTicketingGroupEndpointExt();
 app.Run();
-

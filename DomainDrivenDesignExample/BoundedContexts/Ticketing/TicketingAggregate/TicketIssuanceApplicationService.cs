@@ -1,12 +1,10 @@
-﻿using CinemaTicketingSystem.Application.Catalog.Services;
-using DomainDrivenDesignExample.API.BoundedContexts.Catalog.SupplierCustomerContextMap;
+﻿using DomainDrivenDesignExample.API.BoundedContexts.Catalog.SupplierCustomerContextMap;
 using DomainDrivenDesignExample.API.BoundedContexts.Scheduling.Services.SupplierCustomerContextMap;
 using DomainDrivenDesignExample.API.BoundedContexts.Ticketing.Aggregate;
 using DomainDrivenDesignExample.API.BoundedContexts.Ticketing.SeatHoldAggregate;
 using DomainDrivenDesignExample.API.BoundexContexts.Ticketing;
 using DomainDrivenDesignExample.API.Endpoints.Ticketing.TicketIssuance.Create;
 using DomainDrivenDesignExample.API.SharedKernels;
-using DomainDrivenDesignExample.API.SharedKernels.ValueObjects;
 
 namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.TicketingAggregate;
 
@@ -30,13 +28,13 @@ public class TicketIssuanceApplicationService(
             return AppResult<CreateTicketIssuanceResponse>.Error(scheduleInfo.ProblemDetails!);
 
 
-        AppResult<GetCatalogInfoResponse> catalogInfo =
+        var catalogInfo =
             await catalogQueryService.GetCinemaInfo(scheduleInfo.Data!.CinemaHallId, scheduleInfo.Data.MovieId);
 
         if (catalogInfo.IsFail) return AppResult<CreateTicketIssuanceResponse>.Error(catalogInfo.ProblemDetails!);
 
 
-        List<SeatHold> userSeatHoldList = (await seatHoldRepository.WhereAsync(x =>
+        var userSeatHoldList = (await seatHoldRepository.WhereAsync(x =>
                 x.CustomerId == customerId &&
                 x.ScheduledMovieShowId == request.ScheduledMovieShowId && x.ScreeningDate == request.ScreeningDate))
             .ToList();
@@ -52,7 +50,7 @@ public class TicketIssuanceApplicationService(
 
 
         //    // Fetch confirmed seats from tickets
-        List<SeatPosition> confirmedTicketSeatPositions =
+        var confirmedTicketSeatPositions =
             (await ticketIssuanceRepository.GetConfirmedTicketsIssuanceByScheduleIdAndScreeningDate(
                 request.ScheduledMovieShowId,
                 request.ScreeningDate)).SelectMany(x => x.TicketList)
@@ -60,7 +58,7 @@ public class TicketIssuanceApplicationService(
             .ToList();
 
         //    // Fetch confirmed seats from holds
-        List<SeatPosition> confirmedSeatHoldSeatPositions =
+        var confirmedSeatHoldSeatPositions =
             (await seatHoldRepository.GetConfirmedListByScheduleIdAndScreeningDate(request.ScheduledMovieShowId,
                 request.ScreeningDate)).Where(x => x.CustomerId != customerId)
             .Select(x => x.SeatPosition)
@@ -68,7 +66,7 @@ public class TicketIssuanceApplicationService(
 
 
         //    // Merge uniquely by seat coordinates
-        List<SeatPosition> occupiedSeatPositions = confirmedTicketSeatPositions
+        var occupiedSeatPositions = confirmedTicketSeatPositions
             .Concat(confirmedSeatHoldSeatPositions)
             .DistinctBy(sp => (sp.Row, sp.Number))
             .ToList();
@@ -84,10 +82,10 @@ public class TicketIssuanceApplicationService(
         //}
 
 
-        TicketIssuance newTicketIssuance =
+        var newTicketIssuance =
             new TicketIssuance(request.ScheduledMovieShowId, customerId, request.ScreeningDate);
 
-        foreach (SeatHold? seat in userSeatHoldList)
+        foreach (var seat in userSeatHoldList)
             newTicketIssuance.AddTicket(seat.SeatPosition, scheduleInfo.Data.TicketPrice);
 
         await ticketIssuanceRepository.AddAsync(newTicketIssuance);

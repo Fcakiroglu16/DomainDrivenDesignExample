@@ -1,14 +1,13 @@
 ﻿#region
 
 using Ardalis.GuardClauses;
-using CinemaTicketingSystem.SharedKernel;
 using CinemaTicketingSystem.SharedKernel.AggregateRoot;
 using DomainDrivenDesignExample.API.BoundexContexts.ValueObjects;
 using DomainDrivenDesignExample.API.SharedKernels;
 
 #endregion
 
-namespace CinemaTicketingSystem.Domain.BoundedContexts.Catalog;
+namespace DomainDrivenDesignExample.API.BoundedContexts.Catalog;
 
 public class Movie : AggregateRoot<Guid>
 {
@@ -23,7 +22,7 @@ public class Movie : AggregateRoot<Guid>
         SetTitle(title);
         SetPosterImageUrl(posterImageUrl);
 
-        Duration = Guard.Against.Null(duration, nameof(duration));
+        Duration = Guard.Against.Null(duration);
 
         SupportedTechnology = supportedTechnology;
 
@@ -84,7 +83,7 @@ public class Movie : AggregateRoot<Guid>
         if (!EarliestShowingDate.HasValue)
             return 0;
 
-        int days = (EarliestShowingDate.Value - DateTime.Today).Days;
+        var days = (EarliestShowingDate.Value - DateTime.Today).Days;
         return Math.Max(0, days);
     }
 
@@ -110,7 +109,7 @@ public class Movie : AggregateRoot<Guid>
     // Title Management Helper Methods
     public void SetTitle(string title)
     {
-        title = Guard.Against.NullOrWhiteSpace(title, nameof(title));
+        title = Guard.Against.NullOrWhiteSpace(title);
         //Guard.Against.InvalidInput(title, nameof(title), x => title.Length < MovieConst.TitleMaxLength,
         //    $"Title cannot exceed {MovieConst.TitleMaxLength} characters");
         Title = title.Trim();
@@ -118,7 +117,7 @@ public class Movie : AggregateRoot<Guid>
 
     public void SetPosterImageUrl(string posterImageUrl)
     {
-        posterImageUrl = Guard.Against.NullOrWhiteSpace(posterImageUrl, nameof(posterImageUrl));
+        posterImageUrl = Guard.Against.NullOrWhiteSpace(posterImageUrl);
 
 
         //Guard.Against.InvalidInput(posterImageUrl, nameof(posterImageUrl),
@@ -135,7 +134,7 @@ public class Movie : AggregateRoot<Guid>
 
     public void SetOriginalTitle(string originalTitle)
     {
-        originalTitle = Guard.Against.NullOrWhiteSpace(originalTitle, nameof(originalTitle));
+        originalTitle = Guard.Against.NullOrWhiteSpace(originalTitle);
         //Guard.Against.InvalidInput(originalTitle, nameof(originalTitle),
         //    x => originalTitle.Length < MovieConst.OriginalTitleMaxLength,
         //    $"Original Title cannot exceed {MovieConst.OriginalTitleMaxLength} characters");
@@ -150,7 +149,7 @@ public class Movie : AggregateRoot<Guid>
 
     public void SetDescription(string description)
     {
-        description = Guard.Against.NullOrWhiteSpace(description, nameof(description));
+        description = Guard.Against.NullOrWhiteSpace(description);
         //Guard.Against.InvalidInput(description, nameof(description),
         //    x => description.Length < MovieConst.DescriptionMaxLength,
         //    $"Description cannot exceed {MovieConst.DescriptionMaxLength} characters");
@@ -168,7 +167,7 @@ public class Movie : AggregateRoot<Guid>
         if (string.IsNullOrWhiteSpace(Description))
             return "No description available";
 
-        Guard.Against.NullOrWhiteSpace(Description, nameof(Description));
+        Guard.Against.NullOrWhiteSpace(Description);
         return Description.Length <= maxLength
             ? Description
             : Description[..maxLength] + "...";
@@ -177,7 +176,7 @@ public class Movie : AggregateRoot<Guid>
     // Duration Helper Methods
     public void UpdateDuration(Duration newDuration)
     {
-        Duration = Guard.Against.Null(newDuration, nameof(newDuration));
+        Duration = Guard.Against.Null(newDuration);
     }
 
     public void UpdateDuration(int minutes)
@@ -192,7 +191,7 @@ public class Movie : AggregateRoot<Guid>
 
     public string GetDurationInfo()
     {
-        string info = Duration.GetFormattedDuration();
+        var info = Duration.GetFormattedDuration();
 
         if (Duration.IsShortMovie())
             info += " (Short Film)";
@@ -205,7 +204,7 @@ public class Movie : AggregateRoot<Guid>
     // Showing Status Management
     public void StartShowing(DateTime? startDate = null)
     {
-        DateTime proposedStartDate = startDate ?? DateTime.UtcNow;
+        var proposedStartDate = startDate ?? DateTime.UtcNow;
 
 
         Guard.Against.InvalidInput(proposedStartDate, nameof(startDate), x => CanStartShowingOn(proposedStartDate),
@@ -232,7 +231,7 @@ public class Movie : AggregateRoot<Guid>
         if (DateTime.Today >= EarliestShowingDate.Value)
             return "Available for showing";
 
-        int daysRemaining = GetDaysUntilEarliestShowing();
+        var daysRemaining = GetDaysUntilEarliestShowing();
         return $"Available for showing in {daysRemaining} days ({EarliestShowingDate:MMM dd, yyyy})";
     }
 
@@ -241,7 +240,7 @@ public class Movie : AggregateRoot<Guid>
         if (!ShowingStartDate.HasValue)
             return false;
 
-        DateTime checkDate = date.Date;
+        var checkDate = date.Date;
         return checkDate >= ShowingStartDate.Value &&
                (!ShowingEndDate.HasValue || checkDate <= ShowingEndDate.Value);
     }
@@ -251,8 +250,8 @@ public class Movie : AggregateRoot<Guid>
         if (!ShowingStartDate.HasValue)
             return false;
 
-        DateTime movieStart = ShowingStartDate.Value;
-        DateTime movieEnd = ShowingEndDate ?? DateTime.MaxValue.Date;
+        var movieStart = ShowingStartDate.Value;
+        var movieEnd = ShowingEndDate ?? DateTime.MaxValue.Date;
 
         return movieStart <= endDate.Date && movieEnd >= startDate.Date;
     }

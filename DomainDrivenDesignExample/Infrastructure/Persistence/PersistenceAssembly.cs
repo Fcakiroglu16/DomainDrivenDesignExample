@@ -1,0 +1,3 @@
+﻿namespace DomainDrivenDesignExample.API.Infrastructure.Persistence;
+
+public struct PersistenceAssembly;

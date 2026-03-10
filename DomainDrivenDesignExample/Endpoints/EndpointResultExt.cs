@@ -1,9 +1,8 @@
 ﻿#region
 
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using DomainDrivenDesignExample.API.SharedKernels;
+using Microsoft.AspNetCore.Mvc;
 
 #endregion
 

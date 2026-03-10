@@ -2,11 +2,10 @@
 
 using Ardalis.GuardClauses;
 using CinemaTicketingSystem.SharedKernel.AggregateRoot;
-using DomainDrivenDesignExample.API.BoundedContexts.Catalog;
 
 #endregion
 
-namespace CinemaTicketingSystem.Domain.BoundedContexts.Catalog;
+namespace DomainDrivenDesignExample.API.BoundedContexts.Catalog;
 
 public class Cinema : AggregateRoot<Guid>
 {
@@ -22,8 +21,8 @@ public class Cinema : AggregateRoot<Guid>
     public Cinema(string name, Address address)
     {
         Id = Guid.CreateVersion7();
-        Name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
-        Address = Guard.Against.Null(address, nameof(address));
+        Name = Guard.Against.NullOrWhiteSpace(name);
+        Address = Guard.Against.Null(address);
     }
 
     public string Name { get; private set; }
@@ -33,17 +32,17 @@ public class Cinema : AggregateRoot<Guid>
     // Business behavior methods
     public void UpdateName(string newName)
     {
-        Name = Guard.Against.NullOrWhiteSpace(newName, nameof(newName));
+        Name = Guard.Against.NullOrWhiteSpace(newName);
     }
 
     public void UpdateAddress(Address newAddress)
     {
-        Address = Guard.Against.Null(newAddress, nameof(newAddress));
+        Address = Guard.Against.Null(newAddress);
     }
 
     public void AddHall(CinemaHall hall)
     {
-        Guard.Against.Null(hall, nameof(hall));
+        Guard.Against.Null(hall);
 
         //if (cinemaHalls.Any(h => h.Name == hall.Name)) throw new CinemaHallAlreadyExistsException(hall.Name);
 
@@ -56,7 +55,7 @@ public class Cinema : AggregateRoot<Guid>
 
     public void RemoveHall(Guid hallId)
     {
-        CinemaHall? hall = cinemaHalls.FirstOrDefault(h => h.Id == hallId);
+        var hall = cinemaHalls.FirstOrDefault(h => h.Id == hallId);
 
         if (hall is null)
             //throw new CinemaHallNotFoundException(hallId);

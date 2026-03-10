@@ -1,6 +1,5 @@
 ﻿#region
 
-using CinemaTicketingSystem.Domain.BoundedContexts.Catalog;
 using DomainDrivenDesignExample.API.SharedKernels;
 using DomainDrivenDesignExample.API.SharedKernels.ValueObjects;
 

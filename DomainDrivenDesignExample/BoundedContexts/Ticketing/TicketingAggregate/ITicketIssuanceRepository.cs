@@ -1,5 +1,4 @@
 ﻿using DomainDrivenDesignExample.API.SharedKernels.Repositories;
-using DomainDrivenDesignExample.API.SharedKernels.ValueObjects;
 
 namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.Aggregate;
 

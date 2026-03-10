@@ -1,8 +1,3 @@
-#region
-
-#endregion
-
-
 using CinemaTicketingSystem.Application.Catalog.Services;
 using DomainDrivenDesignExample.API.SharedKernels;
 

@@ -1,14 +1,12 @@
 ﻿#region
 
 using Ardalis.GuardClauses;
-using CinemaTicketingSystem.SharedKernel;
-using DomainDrivenDesignExample.API.BoundedContexts.Catalog;
 using DomainDrivenDesignExample.API.SharedKernels;
 using DomainDrivenDesignExample.API.SharedKernels.ValueObjects;
 
 #endregion
 
-namespace CinemaTicketingSystem.Domain.BoundedContexts.Catalog;
+namespace DomainDrivenDesignExample.API.BoundedContexts.Catalog;
 
 public class CinemaHall : BaseEntity<Guid>
 {
@@ -22,7 +20,7 @@ public class CinemaHall : BaseEntity<Guid>
     public CinemaHall(string name, ScreeningTechnology supportedTechnologies = ScreeningTechnology.Standard)
     {
         Id = Guid.CreateVersion7();
-        Name = Guard.Against.NullOrWhiteSpace(name, nameof(name), "Hall name cannot be empty");
+        Name = Guard.Against.NullOrWhiteSpace(name, "Hall name cannot be empty");
         SupportedTechnologies = supportedTechnologies;
     }
 
@@ -73,12 +71,12 @@ public class CinemaHall : BaseEntity<Guid>
 
     public void UpdateName(string newName)
     {
-        Name = Guard.Against.NullOrWhiteSpace(newName, nameof(newName), "Hall name cannot be empty");
+        Name = Guard.Against.NullOrWhiteSpace(newName, "Hall name cannot be empty");
     }
 
     public void AddSeat(Seat seat)
     {
-        Guard.Against.Null(seat, nameof(seat));
+        Guard.Against.Null(seat);
 
         if (seats.Any(s => s.SeatPosition.Equals(seat.SeatPosition)))
             //throw new SeatAlreadyExistsException(seat.SeatPosition.Row, seat.SeatPosition.Number);
@@ -88,8 +86,8 @@ public class CinemaHall : BaseEntity<Guid>
 
     public void RemoveSeat(string row, int number)
     {
-        Seat? seat = seats.FirstOrDefault(s => s.SeatPosition.Equals(new SeatPosition(row, number)));
-        Guard.Against.Null(seat, nameof(seat), $"Seat {row}{number} not found");
+        var seat = seats.FirstOrDefault(s => s.SeatPosition.Equals(new SeatPosition(row, number)));
+        Guard.Against.Null(seat, $"Seat {row}{number} not found");
 
         seats.Remove(seat);
     }
@@ -111,8 +109,8 @@ public class CinemaHall : BaseEntity<Guid>
 
     public Seat GetSeat(string row, int number)
     {
-        Seat? seat = seats.FirstOrDefault(s => s.SeatPosition.Equals(new SeatPosition(row, number)));
-        return Guard.Against.Null(seat, nameof(seat), $"Seat {row}{number} not found");
+        var seat = seats.FirstOrDefault(s => s.SeatPosition.Equals(new SeatPosition(row, number)));
+        return Guard.Against.Null(seat, $"Seat {row}{number} not found");
     }
 
     public bool HasSeat(string row, int number)

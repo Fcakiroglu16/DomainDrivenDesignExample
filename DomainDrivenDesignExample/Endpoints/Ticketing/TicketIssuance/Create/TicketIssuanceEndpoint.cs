@@ -1,7 +1,6 @@
 ﻿#region
 
 using CinemaTicketingSystem.Presentation.API.Extensions;
-using DomainDrivenDesignExample.API.BoundedContexts.Ticketing.Aggregate;
 using DomainDrivenDesignExample.API.BoundedContexts.Ticketing.TicketingAggregate;
 using Microsoft.AspNetCore.Mvc;
 

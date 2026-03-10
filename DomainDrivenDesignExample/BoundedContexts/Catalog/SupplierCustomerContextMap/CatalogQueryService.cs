@@ -1,5 +1,3 @@
-
-
 namespace DomainDrivenDesignExample.API.BoundedContexts.Catalog.SupplierCustomerContextMap;
 
 //public class CatalogQueryService(
@@ -36,7 +34,6 @@ namespace DomainDrivenDesignExample.API.BoundedContexts.Catalog.SupplierCustomer
 //            return appDependencyService.LocalizeError.Error<GetCatalogInfoResponse>(ErrorCodes.CinemaHallNotFound,
 //                HttpStatusCode.NotFound);
 //        }
-
 
 //        return AppResult<GetCatalogInfoResponse>.SuccessAsOk(new GetCatalogInfoResponse(cinema.Name, hall.Name,
 //            movie.Title, hall.Capacity));

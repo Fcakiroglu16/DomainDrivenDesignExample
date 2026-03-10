@@ -45,7 +45,7 @@ public class Address : ValueObject
     // Formatting methods
     public string GetFullAddress()
     {
-        List<string> parts = new List<string> { Street, District, City, Country };
+        var parts = new List<string> { Street, District, City, Country };
 
         if (!string.IsNullOrEmpty(Description))
             parts.Insert(0, Description);
