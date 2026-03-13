@@ -2,9 +2,9 @@
 using DomainDrivenDesignExample.API.BoundedContexts.Scheduling.Services.SupplierCustomerContextMap;
 using DomainDrivenDesignExample.API.BoundedContexts.Ticketing.Aggregate;
 using DomainDrivenDesignExample.API.BoundedContexts.Ticketing.SeatHoldAggregate;
-using DomainDrivenDesignExample.API.BoundexContexts.Ticketing;
 using DomainDrivenDesignExample.API.Endpoints.Ticketing.TicketIssuance.Create;
 using DomainDrivenDesignExample.API.SharedKernels;
+using DomainDrivenDesignExample.API.SharedKernels.Repositories;
 
 namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.TicketingAggregate;
 

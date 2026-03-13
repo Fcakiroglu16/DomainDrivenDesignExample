@@ -1,4 +1,3 @@
-using CinemaTicketingSystem.Application.Catalog.Services;
 using DomainDrivenDesignExample.API.SharedKernels;
 
 namespace DomainDrivenDesignExample.API.BoundedContexts.Catalog.SupplierCustomerContextMap;

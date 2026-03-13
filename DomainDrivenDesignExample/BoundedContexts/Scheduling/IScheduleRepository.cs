@@ -1,5 +1,7 @@
-﻿namespace DomainDrivenDesignExample.API.BoundedContexts.Scheduling;
+﻿using DomainDrivenDesignExample.API.SharedKernels.Repositories;
 
-public interface IScheduleRepository
+namespace DomainDrivenDesignExample.API.BoundedContexts.Scheduling;
+
+public interface IScheduleRepository : IGenericRepository<Schedule>
 {
 }

@@ -17,7 +17,7 @@ public class TicketIssuance : AggregateRoot<Guid>
 
     private readonly List<Ticket> _ticketList = [];
 
-    private TicketIssuance()
+    protected TicketIssuance()
     {
     }
 

@@ -80,8 +80,9 @@ public class CinemaHall : BaseEntity<Guid>
 
         if (seats.Any(s => s.SeatPosition.Equals(seat.SeatPosition)))
             //throw new SeatAlreadyExistsException(seat.SeatPosition.Row, seat.SeatPosition.Number);
+            return;
 
-            seats.Add(seat);
+        seats.Add(seat);
     }
 
     public void RemoveSeat(string row, int number)

@@ -19,6 +19,8 @@ namespace DomainDrivenDesignExample.API.Infrastructure.Repositories
 
         public DbSet<Cinema> Cinemas { get; set; } = null!;
 
+        public DbSet<Movie> Movies { get; set; } = null!;
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();

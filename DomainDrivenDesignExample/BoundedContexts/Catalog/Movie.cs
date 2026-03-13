@@ -31,7 +31,7 @@ public class Movie : AggregateRoot<Guid>
         //AddIntegrationEvent(new MovieCreatedIntegrationEvent(Id, duration, supportedTechnology));
     }
 
-    private Movie()
+    protected Movie()
     {
     }
 

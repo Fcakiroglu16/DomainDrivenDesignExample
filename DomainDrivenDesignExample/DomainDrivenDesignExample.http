@@ -4,3 +4,47 @@ GET {{DomainDrivenDesignExample_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+# SeatHold - Create
+# seatPositions: list of seats to hold (Row: A/B/C, Number: 1-10)
+# scheduledMovieShowId: the ID of an existing scheduled movie show
+# screeningDate: the date of the screening in YYYY-MM-DD format
+POST {{DomainDrivenDesignExample_HostAddress}}/api/v1/ticketing/seatholds
+Content-Type: application/json
+
+{
+  "seatPositions": [
+    { "row": "A", "number": 4 },
+    { "row": "B", "number": 5 }
+  ],
+  "scheduledMovieShowId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "screeningDate": "2025-08-01"
+}
+
+###
+
+# SeatHold - Confirm
+# scheduledMovieShowId: must match the ID used in the Create SeatHold request
+# screeningDate: must match the date used in the Create SeatHold request
+POST {{DomainDrivenDesignExample_HostAddress}}/api/v1/ticketing/seatholds/confirm
+Content-Type: application/json
+
+{
+  "scheduledMovieShowId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "screeningDate": "2025-08-01"
+}
+
+###
+
+# Ticket Issuance - Create
+# scheduledMovieShowId: the ID of an existing scheduled movie show (obtained from the scheduling context)
+# screeningDate: the date of the screening in YYYY-MM-DD format
+POST {{DomainDrivenDesignExample_HostAddress}}/api/v1/ticketing/issuance
+Content-Type: application/json
+
+{
+  "scheduledMovieShowId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "screeningDate": "2025-08-01"
+}
+
+###

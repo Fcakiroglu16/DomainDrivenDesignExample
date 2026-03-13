@@ -1,6 +1,7 @@
-﻿using DomainDrivenDesignExample.API.SharedKernels.Repositories;
+﻿using DomainDrivenDesignExample.API.BoundedContexts.Ticketing.Aggregate;
+using DomainDrivenDesignExample.API.SharedKernels.Repositories;
 
-namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.Aggregate;
+namespace DomainDrivenDesignExample.API.BoundedContexts.Ticketing.TicketingAggregate;
 
 public interface ITicketIssuanceRepository : IGenericRepository<TicketIssuance>
 {

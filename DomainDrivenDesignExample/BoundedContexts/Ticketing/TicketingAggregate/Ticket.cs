@@ -14,7 +14,7 @@ public class Ticket : BaseEntity<Guid>
         IsUsed = false;
     }
 
-    private Ticket()
+    protected Ticket()
     {
     }
 
